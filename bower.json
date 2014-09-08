@@ -1,0 +1,23 @@
+{
+	"name": "pour",
+	"version": "0.1.0",
+	"main": "dist/pour.min.js",
+	"license": "MIT",
+	"ignore": [
+		"package.json",
+		".editorconfig",
+		".DS_Store",
+		"gulpfile.coffee"
+	],
+	"keywords": [
+		"pour", 
+		"particle", 
+		"system", 
+		"vector", 
+		"field", 
+		"emitter", 
+		"particle", 
+		"compute",
+		"javascript"
+	]
+}

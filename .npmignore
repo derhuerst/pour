@@ -1,0 +1,7 @@
+.editorconfig
+.DS_Store
+.bower.json
+
+gulpfile.coffee
+
+/node_modules
