@@ -28,35 +28,41 @@ Vector.prototype = {
 
 
 	add: function(x, y){
-		if (y !== null) {
+		if (y) {
 			this.x += x;
 			this.y += y;
-		} else if (x !== null) {
+		} else if (x) {
 			this.x += x.x;
-			this.y += y.y;
+			this.y += x.y;
 		}
+
+		return this;
 	},
 
 
-	substract: function(vector){
-		if (y !== null) {
+	substract: function(x, y){
+		if (y) {
 			this.x -= x;
 			this.y -= y;
-		} else if (x !== null) {
+		} else if (x) {
 			this.x -= x.x;
-			this.y -= y.y;
+			this.y -= x.y;
 		}
+
+		return this;
 	},
 
 
 	multiply: function(vector){
-		if(typeof vector === 'number'){
+		if (typeof vector === 'number') {
 			this.x *= vector;
 			this.y *= vector;
-		}else{
+		} else {
 			this.x *= vector.x;
 			this.y *= vector.y;
 		}
+
+		return this;
 	},
 
 
@@ -84,6 +90,7 @@ Vector.prototype = {
 
 
 Vector.fromAngle = function(angle, length){
+	length = typeof length === 'number' ? length : 1;
 	return new Vector(Math.cos(angle) * length, Math.sin(angle) * length);
 };
 
@@ -99,6 +106,8 @@ exports.p = function (options) {
 
 
 function Particle(options){
+	options = options || {};
+
 	this.position = options.position || exports.v();
 	this.velocity = options.velocity || exports.v();
 	this.acceleration = options.acceleration || exports.v();
@@ -135,7 +144,7 @@ Particle.prototype = {
 		for(i = 0, length = fields.length; i < length; i++){
 			force = fields[i].position.clone().substract(thus.position);
 			force.multiply(fields[i].mass / Math.pow(force.x * force.x + force.y * force.y, 1.5));
-			acceleration.add(force);
+			thus.acceleration.add(force);
 		}
 
 		// position & velocity
@@ -159,10 +168,12 @@ exports.e = function (options) {
 
 
 function Emitter(options){
+	options = options || {};
+
 	this.position = options.position || exports.v();
 	this.velocity = options.velocity || exports.v(1);
-	this.spread = (options.spread !== null) ? options.spread : Math.PI / 2;
-	this.death = (options.death !== null) ? options.death : 200;
+	this.spread = options.spread || 0;
+	this.death = (typeof options.death === 'number') ? options.death : 1000;
 }
 
 
@@ -176,9 +187,9 @@ Emitter.prototype = {
 
 
 	emit: function(){
-		return exports.e({
+		return exports.p({
 			position: this.position.clone(),
-			velocity: Vector.fromAngle(this.velocity.angle() + this.spread * (Math.random() - 0.5)).multiply(this.velocity.length()),
+			velocity: Vector.fromAngle(this.velocity.angle() + this.spread * (Math.random() - 0.5), this.velocity.length()),
 			death: this.death
 		});
 	}
@@ -200,7 +211,7 @@ exports.f = function (position, mass) {
 
 function Field(position, mass){
 	this.position = position || exports.v();
-	this.mass = (mass !== null) ? mass : 100;
+	this.mass = (typeof mass === 'number') ? mass : 250;
 }
 
 
@@ -219,6 +230,8 @@ exports.s = function (options) {
 
 
 function System(options){
+	options = options || {};
+
 	this.particles = options.particles || [];
 	this.emitters = options.emitters || [];
 	this.fields = options.fields || [];
@@ -231,16 +244,16 @@ System.prototype = {
 
 
 	add: function(thing){
-		if(this[thing.type].indexOf(thing) < 0)
-			this[thing.type].push(thing);
+		if(this[thing.type + 's'].indexOf(thing) < 0)
+			this[thing.type + 's'].push(thing);
 
 		return this;
 	},
 
 
 	remove: function(thing, i){
-		if(i = this[thing.type].indexOf(thing) >= 0)
-			this[thing.type].splice(i, 1);
+		if(i = this[thing.type + 's'].indexOf(thing) >= 0)
+			this[thing.type + 's'].splice(i, 1);
 
 		return this;
 	},
@@ -248,7 +261,7 @@ System.prototype = {
 
 
 	tick: function(){
-		var particles = this.particles.length, i;
+		var particles = this.particles, i;
 		for(i = 0; i < particles.length; i++){
 			if(particles[i].dead){
 				particles.splice(i, 1);
