@@ -16,7 +16,7 @@ var system = pour.s();    // shorthand for `new pour.System()`
 We also set up an `Emitter` that emits `Particle`s and add it to our `System`.
 
 ```javascript
-var emitter = new pour.e({    // shorthand for `new pour.Emitter(…)`
+var emitter = pour.e({    // shorthand for `new pour.Emitter(…)`
 	position: new pour.Vector(250, 250),	// the position of the emitter
 	velocity: new pour.Vector(1, 0),		// the direction & velocity of the particles
 	spread: Math.PI / 4						// 45 degrees spread (in radians)
