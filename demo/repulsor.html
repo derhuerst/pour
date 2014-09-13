@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<style>
+#canvas{
+	border: 1px solid black;
+}
+	</style>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script src="lib/statsjs/stats.min.js"></script>
+	<script>
+// stats
+var stats = new Stats();
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = stats.domElement.style.bottom = 0;
+document.body.appendChild(stats.domElement);
+	</script>
+	<script src="lib/velo/velo.js"></script>
+	<script src="../dist/pour.js"></script>
+	<script src="rendering.js"></script>
+	<script>
+// setup
+var canvas = new velo.Canvas(document.querySelector('#canvas'));
+
+
+// system
+var system = new pour.System();
+
+
+// emitter
+var emitter = new pour.Emitter({
+	position: new pour.Vector(50, 250),
+	velocity: new pour.Vector(3, 0),
+	spread: Math.PI / 8
+});
+system.add(emitter);
+
+
+// repulsor
+system.add(new pour.Field(new pour.Vector(350, 250), -400));
+
+
+// update & render
+new velo.RenderingInterval(function(){
+	stats.begin();
+	system.tick();
+	system.draw(canvas.context);
+	stats.end();
+}).start();
+
+
+// add particles
+new velo.Interval(function(){
+	system.add(emitter.emit());
+	system.add(emitter.emit());
+}, 25).start();
+	</script>
+</body>
+</html>

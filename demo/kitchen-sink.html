@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<style>
+#canvas{
+	border: 1px solid black;
+}
+	</style>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script src="lib/statsjs/stats.min.js"></script>
+	<script>
+// stats
+var stats = new Stats();
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = stats.domElement.style.bottom = 0;
+document.body.appendChild(stats.domElement);
+	</script>
+	<script src="lib/velo/velo.js"></script>
+	<script src="../dist/pour.js"></script>
+	<script src="rendering.js"></script>
+	<script>
+// setup
+var canvas = new velo.Canvas(document.querySelector('#canvas'));
+
+
+// system
+var system = new pour.System();
+
+
+// emitters
+var emitter1 = new pour.Emitter({
+	position: new pour.Vector(50, 170),
+	velocity: new pour.Vector(2, 0.4)
+});
+system.add(emitter1);
+
+var emitter2 = new pour.Emitter({
+	position: new pour.Vector(50, 180),
+	velocity: new pour.Vector(2, -0.4)
+});
+system.add(emitter2);
+
+
+// fields
+var field1 = new pour.Field(new pour.Vector(200, 100), -100);
+system.add(field1);
+
+var field2 = new pour.Field(new pour.Vector(150, 250), -100);
+system.add(field2);
+
+var field3 = new pour.Field(new pour.Vector(325, 250), 300);
+system.add(field3);
+
+
+// update & render
+new velo.RenderingInterval(function(){
+	stats.begin();
+	system.tick();
+	system.draw(canvas.context);
+	stats.end();
+}).start();
+
+
+// add particles
+new velo.Interval(function(){
+	system.add(emitter1.emit());
+}, 500).start();
+new velo.Interval(function(){
+	system.add(emitter2.emit());
+}, 250).start();
+	</script>
+</body>
+</html>
