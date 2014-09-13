@@ -10,10 +10,12 @@ exports.e = function (options) {
 
 
 function Emitter(options){
+	options = options || {};
+
 	this.position = options.position || exports.v();
 	this.velocity = options.velocity || exports.v(1);
-	this.spread = (options.spread !== null) ? options.spread : Math.PI / 2;
-	this.death = (options.death !== null) ? options.death : 200;
+	this.spread = options.spread || 0;
+	this.death = (typeof options.death === 'number') ? options.death : 1000;
 }
 
 
@@ -27,9 +29,9 @@ Emitter.prototype = {
 
 
 	emit: function(){
-		return exports.e({
+		return exports.p({
 			position: this.position.clone(),
-			velocity: Vector.fromAngle(this.velocity.angle() + this.spread * (Math.random() - 0.5)).multiply(this.velocity.length()),
+			velocity: Vector.fromAngle(this.velocity.angle() + this.spread * (Math.random() - 0.5), this.velocity.length()),
 			death: this.death
 		});
 	}

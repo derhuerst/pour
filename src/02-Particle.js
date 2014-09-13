@@ -10,6 +10,8 @@ exports.p = function (options) {
 
 
 function Particle(options){
+	options = options || {};
+
 	this.position = options.position || exports.v();
 	this.velocity = options.velocity || exports.v();
 	this.acceleration = options.acceleration || exports.v();
@@ -46,7 +48,7 @@ Particle.prototype = {
 		for(i = 0, length = fields.length; i < length; i++){
 			force = fields[i].position.clone().substract(thus.position);
 			force.multiply(fields[i].mass / Math.pow(force.x * force.x + force.y * force.y, 1.5));
-			acceleration.add(force);
+			thus.acceleration.add(force);
 		}
 
 		// position & velocity

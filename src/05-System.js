@@ -10,6 +10,8 @@ exports.s = function (options) {
 
 
 function System(options){
+	options = options || {};
+
 	this.particles = options.particles || [];
 	this.emitters = options.emitters || [];
 	this.fields = options.fields || [];
@@ -22,16 +24,16 @@ System.prototype = {
 
 
 	add: function(thing){
-		if(this[thing.type].indexOf(thing) < 0)
-			this[thing.type].push(thing);
+		if(this[thing.type + 's'].indexOf(thing) < 0)
+			this[thing.type + 's'].push(thing);
 
 		return this;
 	},
 
 
 	remove: function(thing, i){
-		if(i = this[thing.type].indexOf(thing) >= 0)
-			this[thing.type].splice(i, 1);
+		if(i = this[thing.type + 's'].indexOf(thing) >= 0)
+			this[thing.type + 's'].splice(i, 1);
 
 		return this;
 	},
@@ -39,7 +41,7 @@ System.prototype = {
 
 
 	tick: function(){
-		var particles = this.particles.length, i;
+		var particles = this.particles, i;
 		for(i = 0; i < particles.length; i++){
 			if(particles[i].dead){
 				particles.splice(i, 1);

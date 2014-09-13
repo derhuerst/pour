@@ -11,7 +11,7 @@ exports.f = function (position, mass) {
 
 function Field(position, mass){
 	this.position = position || exports.v();
-	this.mass = (mass !== null) ? mass : 100;
+	this.mass = (typeof mass === 'number') ? mass : 250;
 }
 
 

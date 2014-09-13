@@ -21,35 +21,41 @@ Vector.prototype = {
 
 
 	add: function(x, y){
-		if (y !== null) {
+		if (y) {
 			this.x += x;
 			this.y += y;
-		} else if (x !== null) {
+		} else if (x) {
 			this.x += x.x;
-			this.y += y.y;
+			this.y += x.y;
 		}
+
+		return this;
 	},
 
 
-	substract: function(vector){
-		if (y !== null) {
+	substract: function(x, y){
+		if (y) {
 			this.x -= x;
 			this.y -= y;
-		} else if (x !== null) {
+		} else if (x) {
 			this.x -= x.x;
-			this.y -= y.y;
+			this.y -= x.y;
 		}
+
+		return this;
 	},
 
 
 	multiply: function(vector){
-		if(typeof vector === 'number'){
+		if (typeof vector === 'number') {
 			this.x *= vector;
 			this.y *= vector;
-		}else{
+		} else {
 			this.x *= vector.x;
 			this.y *= vector.y;
 		}
+
+		return this;
 	},
 
 
@@ -77,5 +83,6 @@ Vector.prototype = {
 
 
 Vector.fromAngle = function(angle, length){
+	length = typeof length === 'number' ? length : 1;
 	return new Vector(Math.cos(angle) * length, Math.sin(angle) * length);
 };
