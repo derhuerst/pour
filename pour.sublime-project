@@ -6,6 +6,7 @@
 			"folder_exclude_patterns": [
 				"src",
 				"dist",
+				"demo",
 				"node_modules"
 			],
 			"file_exclude_patterns": [
@@ -19,6 +20,10 @@
 		{
 			"path": "./dist",
 			"name": "dist"
+		},
+		{
+			"path": "./demo",
+			"name": "demo"
 		}
 	],
 	"settings": {
