@@ -1,6 +1,6 @@
 # pour
 
-*pour* is a lightweight JavaScript particle system able to simulate **particles, emitters and fields**. It is flexible because it has **no rendering code** and works **time-independent**. In addition, *pour* supports both browser- and node-based environments.
+*pour* is a lightweight JavaScript particle system able to simulate **particles, emitters and fields**. It is flexible because it has **no rendering code** and works **step-based** instead of time-based. In addition, *pour* supports both browser- and node-based environments.
 
 
 ## Getting Started
@@ -30,11 +30,11 @@ Everytime we call `emit`, the `Emitter` emits a new `Particle`.
 var particle = emitter.emit();
 ```
 
-If we add the `Particle` to the `System`, we can compute its path by calling `system.tick()`. Because *pour* works time-independent, each call to `tick` means that one atomic time period has passed. All `Particle`s will then move according to their current `velocity`.
+If we add the `Particle` to the `System`, we can compute its path by calling `system.tick()`. Each call to `tick` simulates one atomic step. All `Particle`s will then move according to their current `velocity`.
 
 ```javascript
 system.add(particle);
-system.tick();    // one time period later…
+system.tick();    // one step further…
 ```
 
 By adding a `Field`, we can influence all `Particle`s in our `System`. A positive `mass` of a `Field` will attract them, a negative will repulse them.
