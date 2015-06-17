@@ -34,6 +34,10 @@
 		{
 			"name": "velo: build dist files",
 			"cmd": ["npm run dist"]
+		},
+		{
+			"name": "velo: run tests",
+			"cmd": ["npm test"]
 		}
 	]
 }

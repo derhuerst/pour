@@ -13,6 +13,7 @@
 		"demo/",
 		".editorconfig",
 		".gitignore",
+		".travis.yml",
 		".npmignore",
 		"gulpfile.coffee",
 		"pour.sublime-project",

@@ -9,6 +9,7 @@ src/
 demo/
 .editorconfig
 .gitignore
+.travis.yml
 bower.json
 gulpfile.coffee
 pour.sublime-project

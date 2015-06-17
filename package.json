@@ -48,6 +48,8 @@
 		"del":					"^1.2.0"
 	},
 	"scripts": {
-		"dist": "gulp"
+		"dist": "gulp",
+		"text": "return true",
+		"prepublish": "npm run dist && npm test"
 	}
 }
