@@ -49,7 +49,7 @@
 	},
 	"scripts": {
 		"dist": "gulp",
-		"text": "return true",
+		"text": "exit 0",
 		"prepublish": "npm run dist && npm test"
 	}
 }

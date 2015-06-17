@@ -65,7 +65,7 @@ gulp.task 'minify', ['build'], () ->
 	.pipe buffer()
 	.pipe header '// ' + [
 		pkg.name
-		pkg.author.name,
+		pkg.author.name
 		"v#{pkg.version}"
 	].join(' | ') + '\n\n'
 	.pipe gulp.dest './dist'
