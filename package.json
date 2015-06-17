@@ -45,11 +45,13 @@
 		"gulp-streamify":		"^0.0.5",
 		"gulp-uglify":			"^1.0.1",
 		"gulp-gzip":			"^1.1.0",
-		"del":					"^1.2.0"
+		"del":					"^1.2.0",
+		"mocha":				"^2.2.5",
+		"mocha-tldr-reporter":	"^1.0.0"
 	},
 	"scripts": {
 		"dist": "gulp",
-		"text": "exit 0",
+		"test": "mocha --compilers coffee:coffee-script/register --reporter mocha-tldr-reporter",
 		"prepublish": "npm run dist && npm test"
 	}
 }

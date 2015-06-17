@@ -7,7 +7,8 @@
 				"src",
 				"dist",
 				"demo",
-				"node_modules"
+				"node_modules",
+				"test",
 			],
 			"file_exclude_patterns": [
 				"*.sublime-workspace"
@@ -24,6 +25,10 @@
 		{
 			"path": "./demo",
 			"name": "demo"
+		},
+		{
+			"path": "./test",
+			"name": "test"
 		}
 	],
 	"settings": {
