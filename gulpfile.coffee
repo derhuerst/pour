@@ -1,8 +1,8 @@
-path		= require 'path'
-gulp		= require 'gulp'
-gutil		= require 'gulp-util'
-fs			= require 'fs'
+# todo: error-checking, linting
 
+gulp		= require 'gulp'
+
+filelog		= require 'gulp-filelog'
 concat		= require 'gulp-concat'
 buffer		= require 'gulp-buffer'
 header		= require 'gulp-header'
@@ -16,18 +16,20 @@ uglify		= require 'gulp-uglify'
 
 gzip		= require 'gulp-gzip'
 
-rimraf		= require 'gulp-rimraf'
+del			= require 'del'
 
 
 # package metadata
 pkg = require './package.json'
+cfg = pkg.config
 
 
 
 
 gulp.task 'concat', () ->
 	return gulp.src './src/*.js'
-	.pipe concat "#{pkg.name}.js", newLine: '\n\n'
+	.pipe filelog()
+	.pipe concat "#{pkg.name}.js", newLine: '\n\n\n\n'
 	.pipe gulp.dest './src'
 
 
@@ -44,8 +46,8 @@ gulp.task 'build', ['concat'], () ->
 	.pipe buffer()
 	.pipe header '// ' + [
 		pkg.name
-		pkg.author.name,
-		"v#{pkg.version}",
+		pkg.author.name
+		"v#{pkg.version}"
 		pkg.homepage
 	].join(' | ') + '\n\n\n\n\n\n'
 	.pipe gulp.dest './dist'
@@ -81,9 +83,8 @@ gulp.task 'gzip', ['minify'], () ->
 
 
 
-gulp.task 'cleanup', ['build'], () ->
-	return gulp.src "./src/#{pkg.name}.js", read:false
-	.pipe rimraf()
+gulp.task 'cleanup', ['build'], (cb) ->
+	del "./src/#{pkg.name}.js", cb
 
 
 
