@@ -1,5 +1,7 @@
 # pour
 
+[![npm version](https://img.shields.io/npm/v/pour.svg)](https://www.npmjs.com/package/pour)
+[![bower version](https://img.shields.io/bower/v/pour.svg)](bower.json)
 [![build status](https://img.shields.io/travis/derhuerst/pour.svg)](https://travis-ci.org/derhuerst/pour)
 [![dev dependency status](https://img.shields.io/david/dev/derhuerst/pour.svg)](https://david-dm.org/derhuerst/pour#info=devDependencies)
 
