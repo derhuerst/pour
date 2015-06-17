@@ -4,19 +4,28 @@
 	"main": "dist/pour.min.js",
 	"license": "MIT",
 	"ignore": [
-		"package.json",
-		".editorconfig",
 		".DS_Store",
-		"gulpfile.coffee"
+		"Thumbs.db",
+		".nvm-version",
+		"node_modules",
+		"npm-debug.log",
+		"src/",
+		"demo/",
+		".editorconfig",
+		".gitignore",
+		".npmignore",
+		"gulpfile.coffee",
+		"pour.sublime-project",
+		"pour.sublime-workspace"
 	],
 	"keywords": [
-		"pour", 
-		"particle", 
-		"system", 
-		"vector", 
-		"field", 
-		"emitter", 
-		"particle", 
+		"pour",
+		"particle",
+		"system",
+		"vector",
+		"field",
+		"emitter",
+		"particle",
 		"compute",
 		"javascript"
 	]

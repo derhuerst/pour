@@ -4,13 +4,13 @@
 	"version": "0.1.0",
 	"main": "dist/pour.js",
 	"keywords": [
-		"pour", 
-		"particle", 
-		"system", 
-		"vector", 
-		"field", 
-		"emitter", 
-		"particle", 
+		"pour",
+		"particle",
+		"system",
+		"vector",
+		"field",
+		"emitter",
+		"particle",
 		"compute",
 		"javascript"
 	],
@@ -24,7 +24,13 @@
 		"type": "git",
 		"url": "git://github.com/derhuerst/pour.git"
 	},
-	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/derhuerst/pour/issues"
+	},
+	"license": {
+		"type": "MIT",
+		"url": "http://github.com/derhuerst/pour/raw/master/LICENSE"
+	},
 	"devDependencies": {
 		"coffee-script":		"^1.8.0",
 		"browserify":			"^5.11.0",
