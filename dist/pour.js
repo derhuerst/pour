@@ -1,86 +1,120 @@
-// pour | Jannis R | v0.1.0 | https://github.com/derhuerst/pour
+// pour | Jannis R | v0.2.0 | https://github.com/derhuerst/pour
 
 
 
 
 
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.pour=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-// A simple 2D vector helper "class" used for positions, velocities and accelerations..
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pour = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// `helpers` contains a collection of helper functions. They are used internally but get `export`ed as well.
 
 
 
-exports.Vector = Vector;
-exports.v = function (x, y) {
-	return new Vector(x, y);
-};
+// EcmaScript 5 strict mode. Because all modules get concatenated, this applies to all of them.
+// See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode for more about ES5 strict mode.
+"strict mode";
 
 
 
-function Vector(x, y){
-	this.x = x || 0;
-	this.y = y || 0;
-}
+// Proxy for `Object.create`. Create a new inherited object from another object. See https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/create and http://davidwalsh.name/javascript-objects-deconstruction#simpler-object-object for more.
+var inherit = exports.inherit = Object.create;
 
 
 
-Vector.prototype = {
+
+// `Vector` represents a 2D vector. It can be used for positions, velocities and accelerations.
+var Vector = exports.Vector = {
 
 
 
-	add: function(x, y){
-		if (y) {
+
+	// Initialize the vector. `x` and `y` are `0` by default.
+	init: function (x, y) {
+		this.x = x || 0;
+		this.y = y || 0;
+
+		return this;   // method chaining
+	},
+
+
+
+	// Set `x` and `y` to `0`.
+	reset: function () {
+		this.x = this.y = 0;
+
+		return this;   // method chaining
+	},
+
+
+
+	// Add to the vector. Either one `Vector` object or two raw values `x` and `y` can be passed.
+	add: function (x, y) {
+		if (arguments.length >= 2) {   // assuming two raw values
 			this.x += x;
 			this.y += y;
-		} else if (x) {
+		} else if (arguments.length === 1 && arguments[0]) {   // assuming one `Vector` object
 			this.x += x.x;
 			this.y += x.y;
 		}
 
-		return this;
+		return this;   // method chaining
 	},
 
 
-	substract: function(x, y){
-		if (y) {
+	// Subtract from the vector. Either one `Vector` object or two raw values `x` and `y` can be passed.
+	substract: function (x, y) {
+		if (arguments.length >= 2) {   // assuming two raw values
 			this.x -= x;
 			this.y -= y;
-		} else if (x) {
+		} else if (arguments.length === 1 && arguments[0]) {   // assuming one `Vector` object
 			this.x -= x.x;
 			this.y -= x.y;
 		}
 
-		return this;
+		return this;   // method chaining
 	},
 
 
-	multiply: function(vector){
+
+	// Do a scalar multiplication with the vector. Either one factor or a `Vector` object with two factors for `x` and `y` can be passed.
+	multiply: function (vector) {
 		if (typeof vector === 'number') {
 			this.x *= vector;
 			this.y *= vector;
-		} else {
+		} else if (typeof vector.x === 'number' && typeof vector.x === 'number') {
 			this.x *= vector.x;
 			this.y *= vector.y;
 		}
 
-		return this;
+		return this;   // method chaining
 	},
 
 
 
-	angle: function(){
+	// Compute the vector's angle in radians.
+	angle: function () {
 		return Math.atan2(this.y, this.x);
 	},
 
 
 
-	length: function(){
+	// Compute the vector's length.
+	length: function () {
 		return Math.sqrt(this.x * this.x + this.y * this.y);
 	},
 
 
 
-	clone: function(){
+	// Return a new `Vector` object with the same values.
+	clone: function () {
 		return new Vector(this.x, this.y);
+	},
+
+
+
+	// Create a new `Vector` object using a direction (`angle`) and a `length`.
+	fromAngle: function (angle, length) {
+		length = typeof length === 'number' ? length : 1;
+		return v(Math.cos(angle) * length, Math.sin(angle) * length);
 	}
 
 
@@ -89,46 +123,53 @@ Vector.prototype = {
 
 
 
-Vector.fromAngle = function(angle, length){
-	length = typeof length === 'number' ? length : 1;
-	return new Vector(Math.cos(angle) * length, Math.sin(angle) * length);
-};
-
-// A simple particle with a position, a speed and an acceleration, influenced by fields in the same system.
-
-
-
-exports.Particle = Particle;
-exports.p = function (options) {
-	return new Particle(options);
+// Export a shorthand.
+var v = exports.v = function (x, y) {
+	return inherit(Vector)
+	.init(x, y);
 };
 
 
 
-function Particle(options){
-	options = options || {};
 
-	this.position = options.position || exports.v();
-	this.velocity = options.velocity || exports.v();
-	this.acceleration = options.acceleration || exports.v();
-
-	this.death = options.death !== null ? options.death : 200;
-	this.life = 0;
-	this.dead = false;
-}
+// `Particle` has a position, a velocity and an acceleration, influenced by `Field`s in the same `System`.
+var Particle = exports.Particle = {
 
 
 
-Particle.prototype = {
+	// Create a new `Particle` based on `options`. `options` is an object that may contain the following keys.
+	// - `position`: The position as a `Vector` object. Default: `pour.v()`
+	// - `velocity`: The velocity as a `Vector` object. Default: `pour.v()`
+	// - `acceleration`: The acceleration as a `Vector` object. Default: `pour.v()`
+	// - `death`: The number of `tick`s the particle will interact with the system for. Default: `200`
+	init: function (options) {
+		options = options || {};
+
+		this.position = options.position || v();
+		this.velocity = options.velocity || v();
+		this.acceleration = options.acceleration || v();
+
+		this.death = (typeof options.death === 'number') ? options.death : 200;
+		this.life = 0;
+		this.dead = false;
+
+		return this;   // method chaining
+	},
 
 
 
+	// todo: necessary?
 	type: 'particle',
 
 
 
+	// pour's computation is done step-based. This means that you can simulate time passing by by calling `tick` regularly. `tick`
+	// - checks if the particle is still alive
+	// - computes the particle's `acceleration` based on the `Field`s it gets influenced by,
+	// - adds the particle's `velocity` to its `position` and
+	// - adds the particle's `acceletation` to its `velocity`.
 	tick: function(fields){
-		if (this.dead) return;
+		if (this.dead) return this;
 
 		var thus = this, i, length, force;
 
@@ -150,35 +191,45 @@ Particle.prototype = {
 		// position & velocity
 		thus.velocity.add(thus.acceleration);
 		thus.position.add(thus.velocity);
+
+		return this;   // method chaining
 	}
 
 
 
 };
 
-// En emitter emits a particle whenever emit is called.
 
 
-
-exports.Emitter = Emitter;
-exports.e = function (options) {
-	return new Emitter(options);
+// Export a shorthand.
+var p = exports.p = function (options) {
+	return inherit(Particle)
+	.init(options);
 };
 
 
 
-function Emitter(options){
-	options = options || {};
 
-	this.position = options.position || exports.v();
-	this.velocity = options.velocity || exports.v(1);
-	this.spread = options.spread || 0;
-	this.death = (typeof options.death === 'number') ? options.death : 1000;
-}
+// An `Emitter` emits a `Particle` whenever `emit()` is called.
+var Emitter = exports.Emitter = {
 
 
 
-Emitter.prototype = {
+	// Create a new `Emitter` based on `options`. `options` is an object that may contain the following keys.
+	// - `position`: Every new particle's `position` as a `Vector` object. Default: `pour.v()`
+	// - `velocity`: Every new particle's `velocity` as a `Vector` object. Default: `pour.v()`
+	// - `death`: The number of `tick`s the new particle will interact with the system for. Default: `1000`
+	// - `spread`: The angle (in radians) by which the new particle's direction varies. Default: `0`
+	init: function (options) {
+		options = options || {};
+
+		this.position = options.position || exports.v();
+		this.velocity = options.velocity || exports.v(1);
+		this.death = (typeof options.death === 'number') ? options.death : 1000;
+		this.spread = options.spread || 0;
+
+		return this;   // method chaining
+	},
 
 
 
@@ -186,7 +237,7 @@ Emitter.prototype = {
 
 
 
-	emit: function(){
+	emit: function () {
 		return exports.p({
 			position: this.position.clone(),
 			velocity: Vector.fromAngle(this.velocity.angle() + this.spread * (Math.random() - 0.5), this.velocity.length()),
@@ -198,83 +249,122 @@ Emitter.prototype = {
 
 };
 
-// A field that either attracts or repulses particles by its mass.
 
 
-
-exports.Field = Field;
-exports.f = function (position, mass) {
-	return new Field(position, mass);
+// Export a shorthand.
+var e = exports.e = function (options) {
+	return inherit(Emitter)
+	.init(options);
 };
 
 
 
-function Field(position, mass){
-	this.position = position || exports.v();
-	this.mass = (typeof mass === 'number') ? mass : 250;
-}
+
+// A `Field` that either attracts or repulses `Particle`s, according to its `mass`.
+var Field = exports.Field = {
 
 
 
-Field.prototype.type = 'field';
+	// Initialize the field. `position` is `pour.v()` by default. `mass` is `250` by default.
+	init: function (position, mass) {
+		this.position = position || v();
+		this.mass = (typeof mass === 'number') ? mass : 250;
 
-// A composition of particles, emitters and fields.
-
-
-
-exports.System = System;
-exports.s = function (options) {
-	return new System(options);
-};
-
-
-
-function System(options){
-	options = options || {};
-
-	this.particles = options.particles || [];
-	this.emitters = options.emitters || [];
-	this.fields = options.fields || [];
-}
-
-
-
-System.prototype = {
-
-
-
-	add: function(thing){
-		if(this[thing.type + 's'].indexOf(thing) < 0)
-			this[thing.type + 's'].push(thing);
-
-		return this;
+		return this;   // method chaining
 	},
 
 
+
+	type: 'field'
+
+
+
+};
+
+
+
+// Export a shorthand.
+var f = exports.f = function (position, mass) {
+	return inherit(Field)
+	.init(position, mass);
+};
+
+
+
+
+// A `System` can hold any number of `Particle`s, `Emitter`s and `Field`s.
+var System = exports.System = {
+
+
+
+	// Create a new `System` based on `options`. `options` is an object that may contain the following keys.
+	// - `particles`: An array of `Particle` objects. Default: `[]`
+	// - `emitters`: An array of `Emitter` objects. Default: `[]`
+	// - `fields`: An array of `Field` objects. Default: `[]`
+	init: function (options) {
+		options = options || {};
+
+		this.particles = options.particles || [];
+		this.emitters = options.emitters || [];
+		this.fields = options.fields || [];
+
+		return this;   // method chaining
+	},
+
+
+
+	type: 'system',
+
+
+
+	// Adds any `Particle`, `Emitter` or `Field` to the `System`.
+	add: function(thing){
+		if (!thing || !thing.type || !this[this.type + 's']) return this;
+
+		if(this[thing.type + 's'].indexOf(thing) < 0)
+			this[thing.type + 's'].push(thing);
+
+		return this;   // method chaining
+	},
+
+
+	// Removes any `Particle`, `Emitter` or `Field` from the `System`.
 	remove: function(thing, i){
+		if (!thing || !thing.type || !this[this.type + 's']) return this;
+
 		if(i = this[thing.type + 's'].indexOf(thing) >= 0)
 			this[thing.type + 's'].splice(i, 1);
 
-		return this;
+		return this;   // method chaining
 	},
 
 
 
 	tick: function(){
-		var particles = this.particles, i;
-		for(i = 0; i < particles.length; i++){
-			if(particles[i].dead){
-				particles.splice(i, 1);
+		var i, length;
+
+		for(i = 0, length = this.particles.length; i < length; i++){
+			if(this.particles[i].dead){
+				this.particles.splice(i, 1);
 				continue;
 			}
-			particles[i].tick(this.fields);
+			this.particles[i].tick(this.fields);
 		}
 
-		return this;
+		return this;   // method chaining
 	}
 
 
 
 };
+
+
+
+// Export a shorthand.
+var s = exports.s = function (options) {
+	return inherit(System)
+	.init(options);
+};
+
 },{}]},{},[1])(1)
 });
