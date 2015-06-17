@@ -7,6 +7,7 @@ npm-debug.log
 
 src/
 demo/
+test/
 .editorconfig
 .gitignore
 .travis.yml
