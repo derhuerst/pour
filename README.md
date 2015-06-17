@@ -1,5 +1,8 @@
 # pour
 
+[![build status](https://img.shields.io/travis/derhuerst/pour.svg)](https://travis-ci.org/derhuerst/pour)
+[![dev dependency status](https://img.shields.io/david/dev/derhuerst/pour.svg)](https://david-dm.org/derhuerst/pour#info=devDependencies)
+
 ***pour* is a lightweight JavaScript particle system** able to simulate **particles, emitters and fields**. It is flexible because it has **no rendering code** and works **step-based** instead of time-based.
 
 *pour* has a simple and straightforward API and embraces [prototypal programming](http://davidwalsh.name/javascript-objects-deconstruction#simpler-object-object), keeping it **below 4kb (minified)**. In addition, it supports both browser- and node-based environments. *pour* is licensed under the **[MIT license](LICENSE)**.
