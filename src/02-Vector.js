@@ -57,7 +57,7 @@ var Vector = exports.Vector = {
 		if (typeof vector === 'number') {
 			this.x *= vector;
 			this.y *= vector;
-		if (typeof vector.x === 'number' && typeof vector.x === 'number') {
+		} else if (typeof vector.x === 'number' && typeof vector.x === 'number') {
 			this.x *= vector.x;
 			this.y *= vector.y;
 		}
