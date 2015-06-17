@@ -1,19 +1,28 @@
-// A field that either attracts or repulses particles by its mass.
+// A `Field` that either attracts or repulses `Particle`s, according to its `mass`.
+var Field = exports.Field = {
 
 
 
-exports.Field = Field;
-exports.f = function (position, mass) {
-	return new Field(position, mass);
+	// Initialize the field. `position` is `pour.v()` by default. `mass` is `250` by default.
+	init: function (position, mass) {
+		this.position = position || v();
+		this.mass = (typeof mass === 'number') ? mass : 250;
+
+		return this;   // method chaining
+	},
+
+
+
+	type: 'field'
+
+
+
 };
 
 
 
-function Field(position, mass){
-	this.position = position || exports.v();
-	this.mass = (typeof mass === 'number') ? mass : 250;
-}
-
-
-
-Field.prototype.type = 'field';
+// Export a shorthand.
+var f = exports.f = function (position, mass) {
+	return inherit(Field)
+	.init(position, mass);
+};

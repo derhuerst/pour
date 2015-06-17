@@ -1,38 +1,41 @@
-// A simple particle with a position, a speed and an acceleration, influenced by fields in the same system.
+// `Particle` has a position, a velocity and an acceleration, influenced by `Field`s in the same `System`.
+var Particle = exports.Particle = {
 
 
 
-exports.Particle = Particle;
-exports.p = function (options) {
-	return new Particle(options);
-};
+	// Create a new `Particle` based on `options`. `options` is an object that may contain the following keys.
+	// - `position`: The position as a `Vector` object. Default: `pour.v()`
+	// - `velocity`: The velocity as a `Vector` object. Default: `pour.v()`
+	// - `acceleration`: The acceleration as a `Vector` object. Default: `pour.v()`
+	// - `death`: The number of `tick`s the particle will interact with the system for. Default: `200`
+	init: function (options) {
+		options = options || {};
+
+		this.position = options.position || v();
+		this.velocity = options.velocity || v();
+		this.acceleration = options.acceleration || v();
+
+		this.death = (typeof options.death === 'number') ? options.death : 200;
+		this.life = 0;
+		this.dead = false;
+
+		return this;   // method chaining
+	},
 
 
 
-function Particle(options){
-	options = options || {};
-
-	this.position = options.position || exports.v();
-	this.velocity = options.velocity || exports.v();
-	this.acceleration = options.acceleration || exports.v();
-
-	this.death = options.death !== null ? options.death : 200;
-	this.life = 0;
-	this.dead = false;
-}
-
-
-
-Particle.prototype = {
-
-
-
+	// todo: necessary?
 	type: 'particle',
 
 
 
+	// pour's computation is done step-based. This means that you can simulate time passing by by calling `tick` regularly. `tick`
+	// - checks if the particle is still alive
+	// - computes the particle's `acceleration` based on the `Field`s it gets influenced by,
+	// - adds the particle's `velocity` to its `position` and
+	// - adds the particle's `acceletation` to its `velocity`.
 	tick: function(fields){
-		if (this.dead) return;
+		if (this.dead) return this;
 
 		var thus = this, i, length, force;
 
@@ -54,8 +57,18 @@ Particle.prototype = {
 		// position & velocity
 		thus.velocity.add(thus.acceleration);
 		thus.position.add(thus.velocity);
+
+		return this;   // method chaining
 	}
 
 
 
+};
+
+
+
+// Export a shorthand.
+var p = exports.p = function (options) {
+	return inherit(Particle)
+	.init(options);
 };
