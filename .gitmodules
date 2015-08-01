@@ -1,0 +1,3 @@
+[submodule "velo"]
+	path = demo/lib/velo
+	url = https://github.com/derhuerst/velo.git
