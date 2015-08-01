@@ -19,33 +19,33 @@ stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = stats.domElement.style.bottom = 0;
 document.body.appendChild(stats.domElement);
 	</script>
-	<script src="lib/velo/velo.js"></script>
+	<script src="lib/velo/dist/velo.js"></script>
 	<script src="../dist/pour.js"></script>
 	<script src="rendering.js"></script>
 	<script>
 // setup
-var canvas = new velo.Canvas(document.querySelector('#canvas'));
+var canvas = velo.c(document.querySelector('#canvas'));
 
 
 // system
-var system = new pour.System();
+var system = pour.s();
 
 
 // emitter
-var emitter = new pour.Emitter({
-	position: new pour.Vector(50, 250),
-	velocity: new pour.Vector(3, 0),
+var emitter = pour.e({
+	position: pour.v(50, 250),
+	velocity: pour.v(3, 0),
 	spread: Math.PI / 8
 });
 system.add(emitter);
 
 
 // repulsor
-system.add(new pour.Field(new pour.Vector(350, 250), -400));
+system.add(pour.f(pour.v(350, 250), -400));
 
 
 // update & render
-new velo.RenderingInterval(function(){
+velo.ri(function(){
 	stats.begin();
 	system.tick();
 	system.draw(canvas.context);
@@ -54,7 +54,7 @@ new velo.RenderingInterval(function(){
 
 
 // add particles
-new velo.Interval(function(){
+velo.i(function(){
 	system.add(emitter.emit());
 	system.add(emitter.emit());
 }, 25).start();
