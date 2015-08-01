@@ -25,7 +25,7 @@ var System = exports.System = {
 
 	// Adds any `Particle`, `Emitter` or `Field` to the `System`.
 	add: function(thing){
-		if (!thing || !thing.type || !this[this.type + 's']) return this;
+		if (!thing || !thing.type || !this[thing.type + 's']) return this;
 
 		if(this[thing.type + 's'].indexOf(thing) < 0)
 			this[thing.type + 's'].push(thing);
