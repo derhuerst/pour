@@ -106,7 +106,7 @@ var Vector = exports.Vector = {
 
 	// Return a new `Vector` object with the same values.
 	clone: function () {
-		return new Vector(this.x, this.y);
+		return v(this.x, this.y);
 	},
 
 
