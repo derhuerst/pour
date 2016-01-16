@@ -27,7 +27,7 @@
 	"bugs": {
 		"url": "https://github.com/derhuerst/pour/issues"
 	},
-	"license": "MIT",
+	"license": "ISC",
 	"devDependencies": {
 		"coffee-script":		"^1.9.3",
 		"gulp":					"^3.9.0",
