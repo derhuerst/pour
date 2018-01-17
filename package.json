@@ -34,7 +34,7 @@
 		"gulp-filelog":			"^0.4.1",
 		"gulp-concat":			"^2.6.0",
 		"gulp-buffer":			"^0.0.2",
-		"gulp-header":			"^1.7.1",
+		"gulp-header":			"^2.0.1",
 		"gulp-size":			"^3.0.0",
 		"gulp-rename":			"^1.2.2",
 		"browserify":			"^15.0.0",
