@@ -37,7 +37,7 @@
 		"gulp-header":			"^2.0.1",
 		"gulp-size":			"^3.0.0",
 		"gulp-rename":			"^1.2.2",
-		"browserify":			"^15.0.0",
+		"browserify":			"^16.0.0",
 		"vinyl-source-stream": 	"^1.1.0",
 		"gulp-streamify":		"^1.0.2",
 		"gulp-uglify":			"^3.0.0",
