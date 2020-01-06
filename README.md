@@ -1,5 +1,11 @@
 # pour
 
+**Outdated and unmaintained.**
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+---
+
 [![npm version](https://img.shields.io/npm/v/pour.svg)](https://www.npmjs.com/package/pour)
 [![bower version](https://img.shields.io/bower/v/pour.svg)](bower.json)
 [![build status](https://img.shields.io/travis/derhuerst/pour.svg)](https://travis-ci.org/derhuerst/pour)
